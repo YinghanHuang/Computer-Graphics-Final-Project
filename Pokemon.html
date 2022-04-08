@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Find the PokemenBall</title>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec3 aVertex;
+        attribute vec3 aColor;
+        attribute vec2 aMp;
+        uniform bool isMaze;
+        uniform mat4 uPMatrix;
+        uniform mat4 uMVMatrix; 
+        uniform mat4 uCMVMatrix; 
+        uniform mat4 uCRMatrix; 
+        varying vec3 vColor;
+        varying vec2 vMp;
+        void main() {
+            vec4 po = uMVMatrix * vec4(aVertex, 1.0);
+            if(isMaze) {
+                vMp = aMp;
+            } else {
+                vColor = aColor;
+            }
+            gl_Position = uPMatrix * uCRMatrix * uCMVMatrix * po;
+        }
+    </script>
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision lowp float;
+        uniform bool isMaze;
+        uniform sampler2D uTex;
+        varying vec3 vColor;
+        varying vec2 vMp;
+        void main() {
+            if(isMaze) {
+                gl_FragColor = texture2D(uTex, vMp);
+            } else {
+                gl_FragColor = vec4(vColor, 1.0);
+            }
+        }
+    </script>
+    <script id="vertex-shader2" type="x-shader/x-vertex">
+    attribute  vec4 vPosition;
+    varying vec4 fColor;
+    void main()
+    {
+        fColor = vec4(0.0, 0.0, 0.0, 1.0);
+        gl_Position = vPosition;
+        gl_Position.z = -gl_Position.z;
+    }
+    </script>
+    <script id="fragment-shader2" type="x-shader/x-fragment">
+    precision mediump float;
+    varying vec4 fColor;
+    void
+    main()
+    {
+        gl_FragColor = fColor;
+    }
+    </script>
+
+    <style>
+        html {
+            cursor: none;
+        }
+
+        .c2d {
+            margin: 1px auto;
+            display: block;
+            transition-property: opacity;
+            transition-duration: 1s;
+        }
+
+        .c3d {
+            display: block;
+            margin: 2px auto;
+        }
+
+        .aim {
+            position: absolute;
+            pointer-events: none;
+            background-image: url(./CS.png);
+            width: 20px;
+            height: 20px;
+            left: 50%;
+            top: 400px;
+            transform: translate(-50%, -50%);
+            opacity: 0.5;
+        }
+
+        .role {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgb(255, 123, 0);
+            position: absolute;
+            transition-property: opacity;
+            transition-duration: 1s;
+        }
+
+        #showTime {
+            width: 300px;
+            height: 40px;
+            font-size: 40px;
+            line-height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="showTime">00:00:00</div>
+    <p>please don't scale the page while playing the game.</p>
+    <p>press P to pause (The timer will start automatically once you moved). For more challenge? Press spacebar to hide the map!!!</p>
+
+        <canvas id="c3d" class="c3d" width="700" height="525"></canvas>
+        <canvas id="c2d" class="c2d" width="390" height="290"></canvas>
+    <div class="aim"></div>
+    <script type="text/javascript" src="../Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../Common/MV.js"></script>
+    <script type="text/javascript" src="objLoader.js"></script>
+    <script type="text/javascript" src="Pokemon.js"></script>
+</body>
+
+</html>

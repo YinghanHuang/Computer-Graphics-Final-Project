@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+
+        attribute vec4 vPosition; 
+        attribute vec4 vColor; 
+        uniform int renderMode; 
+        varying vec4 fColor; 
+        void main() { 
+            gl_Position = vPosition; 
+            if (renderMode == 2)
+            { 
+                fColor = vec4(0.0, 1.0, 0.0, 1.0); 
+            } 
+            else if (renderMode == 3)
+            { 
+                fColor = vec4(0.0, 0.0, 1.0, 1.0); 
+            } 
+            else { 
+                // Color passed to shader as attribute. 
+                fColor = vColor;
+        
+            } 
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float; 
+        varying vec4 fColor; 
+        void main() 
+        { 
+            gl_FragColor = fColor;
+        }
+    </script>
+
+    <script type="text/javascript" src="../Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../Common/initShaders.js"></script>
+    <script type="text/javascript" src="../Common/MV.js"></script>
+    <script type="text/javascript" src="assignment1.js"></script>
+</head>
+
+<body>
+    <canvas id="gl-canvas" width="512" height="512">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+
+    <select id="mymenu" size="5">
+        <option value="0">Smooth Rainbow</option>
+        <option value="1">Smooth Rainbow Triangle Fan</option>
+        <option value="2">Solid Green</option>
+        <option value="3">Solid Blue</option>
+        <option value="4">Outline</option>
+    </select>
+
+</body>
+
+</html>

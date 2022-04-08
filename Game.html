@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Find the PokemenBall</title>
+    <script langguage="javascript">
+        function start() {
+            window.location.replace("Pokemon.html");
+        }
+    </script>
+    <style>
+        #Hint {
+            width: auto;
+            height: auto;
+            font-size: 40px;
+            line-height: 40px;
+        }
+
+        #play {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 47%;
+            top: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="Hint">
+        Use the mouse to control the direction;<br>
+        Use "W" and "S" button to move forward or backward.<br>
+        Press "P" if you want to pause and take a rest.<br>
+        Try your best to find the way out the maze as quick as possible and find the Pokemon.<br><br>
+        Hint: the maze is genrated randomly. <br>
+        If you accidentally press the refresh button on the page, your progress will not be saved and the maze will be updated.
+    </div>
+    <div id="play">
+        <input type="button" onclick="start()" value="Play!" style="height:50px;width:100px" />
+    </div>
+
+</body>
